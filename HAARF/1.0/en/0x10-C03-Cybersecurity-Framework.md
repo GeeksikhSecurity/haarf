@@ -8,37 +8,16 @@ Healthcare AI agents must implement comprehensive cybersecurity measures that pr
 
 ## C3.1 Resilience to Socio-Technical Disruption
 
-While HAARF Category C3 emphasizes adversarial cybersecurity threats, healthcare AI agents must also be resilient to socio-technical disruptions—failures that arise not from malicious attacks but from broader systemic challenges such as infrastructure outages, public health crises, or societal misinformation campaigns. Autonomous agents that lack resilience planning may inadvertently compromise continuity of care during precisely the moments when patients are most vulnerable.
+Implement comprehensive resilience frameworks ensuring healthcare AI agents maintain operational continuity during systemic disruptions including infrastructure failures, public health emergencies, and societal challenges that extend beyond traditional cybersecurity threats.
 
-### Systemic Disruption Scenarios
-
-Potential disruption scenarios include:
-
-**Healthcare Infrastructure Failures:** Electronic Health Record (EHR) outages, cloud service downtime, or interoperability breakdowns.
-
-**Public Health Emergencies:** Sudden demand surges, resource shortages, or pandemic-related care shifts.
-
-**Societal Disruptions:** Disinformation campaigns undermining trust in healthcare AI, or policy-level shifts that alter clinical workflows.
-
-These risks require safeguards beyond traditional IT security.
-
-### Resilience and Contingency Planning Requirements
-
-HAARF should require explicit resilience strategies for AI agents, including:
-
-**Fallback Procedures:** Defined protocols for safe system degradation (e.g., reverting to decision support mode if autonomy is compromised).
-
-**Human Takeover Readiness:** Clear handoff mechanisms enabling clinicians to regain control seamlessly during disruptions.
-
-**Continuity-of-Care Protocols:** Assurance that patient treatment is not interrupted, even during systemic failures, through redundant pathways and alternative data access mechanisms.
-
-### Alignment with Healthcare Safety Principles
-
-This resilience approach is consistent with established healthcare safety frameworks, including the Joint Commission's continuity-of-care requirements and WHO's emphasis on health system resilience in crisis contexts (WHO, 2020). By embedding resilience planning into HAARF, the framework ensures that AI agents reinforce, rather than weaken, systemic preparedness.
-
-### Operational Requirements
-
-Healthcare organizations must develop and regularly test comprehensive resilience plans that address both technical failures and broader systemic disruptions. These plans should include documented fallback procedures, staff training protocols, communication strategies, and coordination mechanisms with healthcare system partners. Resilience capabilities must be validated through regular exercises and updated based on emerging threats and operational experience.
+| # | Description | Level | Role |
+|:--------:|---------------------------------------------------------------------------------------------------------------------|:---:|:---:|
+| **3.1.1** | **Verify that** healthcare AI agents implement resilience planning for systemic disruption scenarios including healthcare infrastructure failures (EHR outages, cloud service downtime, interoperability breakdowns), public health emergencies (demand surges, resource shortages, pandemic shifts), and societal disruptions (disinformation campaigns, policy changes). | 1 | H/D |
+| **3.1.2** | **Verify that** AI agents include fallback procedures with defined protocols for safe system degradation, including automatic reversion to decision support mode when autonomous operation is compromised and graceful service reduction without compromising patient safety. | 1 | D/H |
+| **3.1.3** | **Verify that** resilience frameworks include human takeover readiness with clear handoff mechanisms enabling healthcare professionals to regain control seamlessly during disruptions while maintaining access to critical patient data and clinical decision support. | 1 | H/C |
+| **3.1.4** | **Verify that** continuity-of-care protocols ensure patient treatment continuation during systemic failures through redundant pathways, alternative data access mechanisms, and coordination with backup healthcare systems and manual processes. | 2 | H/C |
+| **3.1.5** | **Verify that** resilience planning aligns with established healthcare safety frameworks including Joint Commission continuity-of-care requirements, WHO health system resilience principles, and organizational emergency preparedness protocols. | 2 | H/V |
+| **3.1.6** | **Verify that** healthcare organizations develop, regularly test, and update comprehensive resilience plans addressing both technical failures and broader systemic disruptions, including documented fallback procedures, staff training protocols, communication strategies, and healthcare system partner coordination mechanisms validated through regular exercises. | 3 | H |
 
 ---
 
@@ -48,12 +27,12 @@ Implement protection against adversarial attacks targeting healthcare AI agents 
 
 | # | Description | Level | Role |
 |:--------:|---------------------------------------------------------------------------------------------------------------------|:---:|:---:|
-| **3.8.1** | **Verify that** healthcare AI agents undergo adversarial robustness testing including evasion attacks on medical imaging, poisoning attacks on clinical datasets, and prompt injection attacks on clinical AI assistants. | 1 | D/V |
-| **3.8.2** | **Verify that** adversarial testing covers healthcare-specific attack vectors including medical device data manipulation, clinical protocol disruption, and patient data poisoning scenarios. | 1 | D/V |
-| **3.8.3** | **Verify that** AI agents implement input validation and sanitization specifically designed for healthcare data formats (HL7, DICOM, FHIR) and clinical workflow integration points. | 1 | D/H |
-| **3.8.4** | **Verify that** adversarial defense mechanisms maintain clinical accuracy and do not compromise patient care delivery or clinical workflow efficiency. | 2 | D/C |
-| **3.8.5** | **Verify that** robustness testing includes healthcare edge cases such as rare diseases, pediatric patients, emergency scenarios, and resource-constrained clinical environments. | 2 | D/C |
-| **3.4.6** | **Verify that** advanced adversarial defenses include adaptive protection that evolves with emerging healthcare-specific attack patterns and maintains effectiveness over time. | 3 | D/V |
+| **3.2.1** | **Verify that** healthcare AI agents undergo adversarial robustness testing including evasion attacks on medical imaging, poisoning attacks on clinical datasets, and prompt injection attacks on clinical AI assistants. | 1 | D/V |
+| **3.2.2** | **Verify that** adversarial testing covers healthcare-specific attack vectors including medical device data manipulation, clinical protocol disruption, and patient data poisoning scenarios. | 1 | D/V |
+| **3.2.3** | **Verify that** AI agents implement input validation and sanitization specifically designed for healthcare data formats (HL7, DICOM, FHIR) and clinical workflow integration points. | 1 | D/H |
+| **3.2.4** | **Verify that** adversarial defense mechanisms maintain clinical accuracy and do not compromise patient care delivery or clinical workflow efficiency. | 2 | D/C |
+| **3.2.5** | **Verify that** robustness testing includes healthcare edge cases such as rare diseases, pediatric patients, emergency scenarios, and resource-constrained clinical environments. | 2 | D/C |
+| **3.2.6** | **Verify that** advanced adversarial defenses include adaptive protection that evolves with emerging healthcare-specific attack patterns and maintains effectiveness over time. | 3 | D/V |
 
 ---
 
@@ -63,12 +42,12 @@ Secure the healthcare AI supply chain including pre-trained models, medical data
 
 | # | Description | Level | Role |
 |:--------:|---------------------------------------------------------------------------------------------------------------------|:---:|:---:|
-| **3.8.1** | **Verify that** all healthcare AI supply chain components (pre-trained models, clinical datasets, medical ontologies, healthcare APIs) undergo security validation including vulnerability scanning, integrity verification, and provenance validation. | 1 | D/V |
-| **3.8.2** | **Verify that** healthcare-specific supply chain components are obtained from trusted sources with established security practices and healthcare compliance credentials (HIPAA, SOC 2, ISO 27001). | 1 | D/V |
-| **3.8.3** | **Verify that** supply chain security includes cryptographic verification of model weights, dataset integrity, and healthcare component authenticity using digital signatures and blockchain-based provenance when available. | 2 | D/V |
-| **3.8.4** | **Verify that** continuous monitoring detects supply chain compromises including model backdoors, dataset poisoning, and malicious healthcare component updates. | 2 | D/V |
-| **3.8.5** | **Verify that** supply chain risk assessment includes healthcare-specific threat modeling covering medical device integration risks, clinical data exposure, and healthcare system interdependencies. | 2 | D/H |
-| **3.4.6** | **Verify that** advanced supply chain security includes automated threat intelligence integration and predictive risk assessment for emerging healthcare AI security threats. | 3 | D/V |
+| **3.3.1** | **Verify that** all healthcare AI supply chain components (pre-trained models, clinical datasets, medical ontologies, healthcare APIs) undergo security validation including vulnerability scanning, integrity verification, and provenance validation. | 1 | D/V |
+| **3.3.2** | **Verify that** healthcare-specific supply chain components are obtained from trusted sources with established security practices and healthcare compliance credentials (HIPAA, SOC 2, ISO 27001). | 1 | D/V |
+| **3.3.3** | **Verify that** supply chain security includes cryptographic verification of model weights, dataset integrity, and healthcare component authenticity using digital signatures and blockchain-based provenance when available. | 2 | D/V |
+| **3.3.4** | **Verify that** continuous monitoring detects supply chain compromises including model backdoors, dataset poisoning, and malicious healthcare component updates. | 2 | D/V |
+| **3.3.5** | **Verify that** supply chain risk assessment includes healthcare-specific threat modeling covering medical device integration risks, clinical data exposure, and healthcare system interdependencies. | 2 | D/H |
+| **3.3.6** | **Verify that** advanced supply chain security includes automated threat intelligence integration and predictive risk assessment for emerging healthcare AI security threats. | 3 | D/V |
 
 ---
 
@@ -78,11 +57,11 @@ Implement continuous monitoring systems that detect AI-specific security threats
 
 | # | Description | Level | Role |
 |:--------:|---------------------------------------------------------------------------------------------------------------------|:---:|:---:|
-| **3.8.1** | **Verify that** healthcare AI agents implement real-time monitoring systems that detect anomalous behavior patterns, unusual decision clustering, and potential security incidents affecting patient care. | 1 | D/H |
-| **3.8.2** | **Verify that** threat monitoring integrates with healthcare security operations centers (SOC) and clinical incident response systems with appropriate alert prioritization based on patient safety impact. | 1 | D/H |
-| **3.8.3** | **Verify that** monitoring systems detect AI-specific threats including adversarial inputs, model manipulation attempts, and unauthorized access to AI agent decision processes. | 2 | D/V |
-| **3.8.4** | **Verify that** healthcare threat monitoring includes clinical context awareness distinguishing between legitimate clinical variations and potential security threats. | 2 | D/C |
-| **3.8.5** | **Verify that** threat detection includes healthcare workflow disruption monitoring identifying AI-based attacks on clinical processes and patient care delivery. | 2 | D/H |
+| **3.4.1** | **Verify that** healthcare AI agents implement real-time monitoring systems that detect anomalous behavior patterns, unusual decision clustering, and potential security incidents affecting patient care. | 1 | D/H |
+| **3.4.2** | **Verify that** threat monitoring integrates with healthcare security operations centers (SOC) and clinical incident response systems with appropriate alert prioritization based on patient safety impact. | 1 | D/H |
+| **3.4.3** | **Verify that** monitoring systems detect AI-specific threats including adversarial inputs, model manipulation attempts, and unauthorized access to AI agent decision processes. | 2 | D/V |
+| **3.4.4** | **Verify that** healthcare threat monitoring includes clinical context awareness distinguishing between legitimate clinical variations and potential security threats. | 2 | D/C |
+| **3.4.5** | **Verify that** threat detection includes healthcare workflow disruption monitoring identifying AI-based attacks on clinical processes and patient care delivery. | 2 | D/H |
 | **3.4.6** | **Verify that** advanced monitoring incorporates machine learning-based threat detection specifically trained on healthcare AI attack patterns and clinical security incidents. | 3 | D/V |
 
 ---
@@ -93,11 +72,11 @@ Ensure healthcare AI agents meet OWASP AISVS security verification standards ada
 
 | # | Description | Level | Role |
 |:--------:|---------------------------------------------------------------------------------------------------------------------|:---:|:---:|
-| **3.8.1** | **Verify that** healthcare AI agents undergo OWASP AISVS security verification with healthcare-specific adaptations covering clinical data protection, medical device integration, and patient safety considerations. | 2 | V |
-| **3.8.2** | **Verify that** AISVS verification includes healthcare-specific security controls for training data governance, user input validation, and model lifecycle management in clinical environments. | 2 | V |
-| **3.8.3** | **Verify that** healthcare AI agents meet AISVS requirements for memory and embeddings security, particularly for systems processing sensitive healthcare data and clinical knowledge bases. | 2 | D/V |
-| **3.8.4** | **Verify that** AISVS autonomous orchestration security controls are implemented for healthcare AI agents with specific attention to clinical workflow integration and patient care process protection. | 3 | D/V |
-| **3.8.5** | **Verify that** advanced AISVS compliance includes healthcare-specific customization of security verification requirements reflecting clinical risk profiles and regulatory compliance needs. | 3 | V |
+| **3.5.1** | **Verify that** healthcare AI agents undergo OWASP AISVS security verification with healthcare-specific adaptations covering clinical data protection, medical device integration, and patient safety considerations. | 2 | V |
+| **3.5.2** | **Verify that** AISVS verification includes healthcare-specific security controls for training data governance, user input validation, and model lifecycle management in clinical environments. | 2 | V |
+| **3.5.3** | **Verify that** healthcare AI agents meet AISVS requirements for memory and embeddings security, particularly for systems processing sensitive healthcare data and clinical knowledge bases. | 2 | D/V |
+| **3.5.4** | **Verify that** AISVS autonomous orchestration security controls are implemented for healthcare AI agents with specific attention to clinical workflow integration and patient care process protection. | 3 | D/V |
+| **3.5.5** | **Verify that** advanced AISVS compliance includes healthcare-specific customization of security verification requirements reflecting clinical risk profiles and regulatory compliance needs. | 3 | V |
 
 ---
 
@@ -107,12 +86,12 @@ Implement specialized security controls for healthcare data processing ensuring 
 
 | # | Description | Level | Role |
 |:--------:|---------------------------------------------------------------------------------------------------------------------|:---:|:---:|
-| **3.8.1** | **Verify that** healthcare AI agents implement comprehensive data protection controls including encryption at rest and in transit, secure key management, and access controls for PHI processing. | 1 | D/H |
-| **3.8.2** | **Verify that** privacy-preserving AI techniques (differential privacy, federated learning, homomorphic encryption) are implemented where appropriate to minimize healthcare data exposure. | 2 | D/V |
-| **3.8.3** | **Verify that** healthcare data processing includes patient consent verification, data minimization principles, and purpose limitation aligned with healthcare privacy regulations. | 2 | D/H |
-| **3.8.4** | **Verify that** cross-border healthcare data transfers comply with international data protection regulations (GDPR Article 45, HIPAA international provisions) when applicable. | 2 | D/V |
-| **3.8.5** | **Verify that** healthcare AI agents support patient data rights including access, correction, deletion, and portability requests while maintaining clinical record integrity. | 3 | D/H |
-| **3.7.6** | **Verify that** advanced privacy protection includes zero-knowledge proofs and secure multi-party computation for sensitive healthcare AI computations. | 3 | D/V |
+| **3.6.1** | **Verify that** healthcare AI agents implement comprehensive data protection controls including encryption at rest and in transit, secure key management, and access controls for PHI processing. | 1 | D/H |
+| **3.6.2** | **Verify that** privacy-preserving AI techniques (differential privacy, federated learning, homomorphic encryption) are implemented where appropriate to minimize healthcare data exposure. | 2 | D/V |
+| **3.6.3** | **Verify that** healthcare data processing includes patient consent verification, data minimization principles, and purpose limitation aligned with healthcare privacy regulations. | 2 | D/H |
+| **3.6.4** | **Verify that** cross-border healthcare data transfers comply with international data protection regulations (GDPR Article 45, HIPAA international provisions) when applicable. | 2 | D/V |
+| **3.6.5** | **Verify that** healthcare AI agents support patient data rights including access, correction, deletion, and portability requests while maintaining clinical record integrity. | 3 | D/H |
+| **3.6.6** | **Verify that** advanced privacy protection includes zero-knowledge proofs and secure multi-party computation for sensitive healthcare AI computations. | 3 | D/V |
 
 ---
 
@@ -122,11 +101,11 @@ Establish healthcare-specific incident response procedures for AI agent security
 
 | # | Description | Level | Role |
 |:--------:|---------------------------------------------------------------------------------------------------------------------|:---:|:---:|
-| **3.8.1** | **Verify that** healthcare organizations implement AI-specific incident response procedures integrated with clinical emergency response and patient safety protocols. | 1 | H |
-| **3.8.2** | **Verify that** incident response includes clinical leadership involvement, patient safety officer engagement, and medical staff communication procedures for AI agent security incidents. | 1 | H/C |
-| **3.8.3** | **Verify that** security incident response includes clinical impact assessment, patient care continuity planning, and manual backup procedures for AI agent failures. | 2 | H/C |
-| **3.8.4** | **Verify that** incident recovery procedures include clinical validation of restored AI agent functionality and patient safety verification before returning to operational status. | 2 | H/C |
-| **3.8.5** | **Verify that** healthcare incident response includes regulatory notification procedures for security incidents affecting patient care or healthcare data breaches. | 2 | H/V |
+| **3.7.1** | **Verify that** healthcare organizations implement AI-specific incident response procedures integrated with clinical emergency response and patient safety protocols. | 1 | H |
+| **3.7.2** | **Verify that** incident response includes clinical leadership involvement, patient safety officer engagement, and medical staff communication procedures for AI agent security incidents. | 1 | H/C |
+| **3.7.3** | **Verify that** security incident response includes clinical impact assessment, patient care continuity planning, and manual backup procedures for AI agent failures. | 2 | H/C |
+| **3.7.4** | **Verify that** incident recovery procedures include clinical validation of restored AI agent functionality and patient safety verification before returning to operational status. | 2 | H/C |
+| **3.7.5** | **Verify that** healthcare incident response includes regulatory notification procedures for security incidents affecting patient care or healthcare data breaches. | 2 | H/V |
 | **3.7.6** | **Verify that** advanced incident response includes predictive threat modeling and proactive security measures preventing similar healthcare AI security incidents. | 3 | H/V |
 
 ---

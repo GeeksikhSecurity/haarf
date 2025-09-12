@@ -8,27 +8,16 @@ Healthcare AI agents must demonstrate fairness, prevent discriminatory outcomes,
 
 ## C7.1 Continuous Equity Monitoring and Iterative Feedback Loops
 
-Bias and accessibility risks in healthcare AI agents cannot be resolved through one-time assessments alone. Instead, they represent dynamic risks that evolve as patient populations, clinical practices, and data distributions change. To address this, HAARF extends Category C7 through a requirement for continuous equity monitoring and iterative feedback loops, ensuring equity considerations remain active throughout the lifecycle of AI agents.
+Implement comprehensive continuous equity monitoring systems with iterative feedback loops ensuring bias and accessibility risks are actively managed throughout the AI agent lifecycle as patient populations, clinical practices, and data distributions evolve.
 
-### Equity and Intersectionality Metrics
-
-Traditional bias assessments often evaluate fairness along single axes, such as race or gender. However, healthcare outcomes are shaped by overlapping identity factors including race, disability, socioeconomic status, age, and geography. Health Canada's SGBA+ framework already mandates intersectional analysis for medical devices (Health Canada, 2021). Building on this, HAARF requires the use of multi-metric fairness evaluations, including subgroup accuracy, calibration drift analysis, error disparity ratios, and accessibility performance scores for patients with disabilities. These metrics should be systematically tracked and benchmarked against clinically relevant thresholds rather than purely statistical parity.
-
-### Regular Auditing Cycles
-
-Equity assurance should not rely on one-time validation at deployment. Instead, organizations must implement recurring audit cycles (e.g., annual or semi-annual) assessing fairness and accessibility outcomes. These audits should be integrated with HAARF Level 2 continuous clinical performance monitoring. Independent verification by regulatory authorities, external auditors, or ethics committees should be encouraged to maintain impartiality and trust. Public reporting of audit summaries, where feasible, may further enhance transparency and accountability.
-
-### Iterative Feedback Mechanisms
-
-Equity monitoring must be linked to structured remediation pathways. When disparities are identified, organizations should initiate corrective actions such as retraining models with more representative datasets, recalibrating decision thresholds, or revising autonomy boundaries. This creates a closed-loop governance system, analogous to post-market pharmacovigilance in drug regulation, where bias "signals" trigger corrective cycles before inequities compound into systemic harm.
-
-### Global Accessibility Perspective
-
-Consistent with the WHO Global Initiative on AI for Health (WHO, 2021), equity audits should extend beyond well-resourced clinical environments to include global accessibility considerations. This includes ensuring language inclusivity, usability in resource-limited contexts, and compliance with digital accessibility standards. Incorporating a global perspective ensures that HAARF does not inadvertently reinforce inequities across healthcare systems worldwide.
-
-### Implementation Framework
-
-Organizations must establish systematic equity monitoring protocols that integrate with existing clinical quality management systems. These protocols should include defined metrics, audit schedules, remediation procedures, and documentation requirements that support both internal quality improvement and regulatory compliance reporting. Equity monitoring systems must be designed for scalability and interoperability with healthcare information systems to ensure sustainable long-term implementation.
+| # | Description | Level | Role |
+|:--------:|---------------------------------------------------------------------------------------------------------------------|:---:|:---:|
+| **7.1.1** | **Verify that** healthcare AI agents implement continuous equity monitoring systems that track performance across overlapping identity factors including race, disability, socioeconomic status, age, and geography using multi-metric fairness evaluations rather than single-axis bias assessments. | 1 | D/H |
+| **7.1.2** | **Verify that** equity monitoring includes intersectional analysis following Health Canada SGBA+ framework requirements, systematically tracking subgroup accuracy, calibration drift analysis, error disparity ratios, and accessibility performance scores benchmarked against clinically relevant thresholds. | 1 | D/V |
+| **7.1.3** | **Verify that** healthcare organizations implement recurring equity audit cycles (annual or semi-annual) assessing fairness and accessibility outcomes, integrated with continuous clinical performance monitoring and independent verification by regulatory authorities, external auditors, or ethics committees. | 1 | H/V |
+| **7.1.4** | **Verify that** equity monitoring systems include structured remediation pathways that trigger corrective actions when disparities are identified, including model retraining with representative datasets, decision threshold recalibration, and autonomy boundary revisions to prevent systemic harm. | 2 | D/H |
+| **7.1.5** | **Verify that** equity audits extend beyond well-resourced clinical environments to include global accessibility considerations ensuring language inclusivity, usability in resource-limited contexts, and compliance with digital accessibility standards aligned with WHO Global Initiative on AI for Health principles. | 2 | D/H |
+| **7.1.6** | **Verify that** systematic equity monitoring protocols integrate with existing clinical quality management systems, including defined metrics, audit schedules, remediation procedures, and documentation requirements designed for scalability and interoperability with healthcare information systems supporting both internal quality improvement and regulatory compliance reporting. | 3 | H/V |
 
 ---
 
@@ -38,12 +27,12 @@ Ensure AI agent training data adequately represents diverse patient populations 
 
 | # | Description | Level | Role |
 |:--------:|---------------------------------------------------------------------------------------------------------------------|:---:|:---:|
-| **7.8.1** | **Verify that** healthcare AI agent training datasets include comprehensive demographic representation across age, sex, gender, race, ethnicity, socioeconomic status, geographic location, and relevant clinical variables. | 1 | D/V |
-| **7.8.2** | **Verify that** training data collection actively addresses historical healthcare data biases through targeted data acquisition from underrepresented populations and healthcare settings. | 1 | D/H |
-| **7.8.3** | **Verify that** demographic representation analysis includes statistical validation demonstrating adequate sample sizes for reliable AI agent performance across all represented population groups. | 1 | D/V |
-| **7.8.4** | **Verify that** training data includes diverse healthcare delivery contexts including rural healthcare, community clinics, safety-net hospitals, and resource-limited settings to ensure broad applicability. | 2 | D/H |
-| **7.8.5** | **Verify that** data representativeness assessment includes evaluation of relevant clinical variables such as comorbidity patterns, medication responses, and disease progression differences across demographic groups. | 2 | D/C |
-| **7.5.6** | **Verify that** advanced representativeness validation includes longitudinal analysis ensuring demographic representation is maintained across different time periods and evolving population characteristics. | 3 | D/V |
+| **7.2.1** | **Verify that** healthcare AI agent training datasets include comprehensive demographic representation across age, sex, gender, race, ethnicity, socioeconomic status, geographic location, and relevant clinical variables. | 1 | D/V |
+| **7.2.2** | **Verify that** training data collection actively addresses historical healthcare data biases through targeted data acquisition from underrepresented populations and healthcare settings. | 1 | D/H |
+| **7.2.3** | **Verify that** demographic representation analysis includes statistical validation demonstrating adequate sample sizes for reliable AI agent performance across all represented population groups. | 1 | D/V |
+| **7.2.4** | **Verify that** training data includes diverse healthcare delivery contexts including rural healthcare, community clinics, safety-net hospitals, and resource-limited settings to ensure broad applicability. | 2 | D/H |
+| **7.2.5** | **Verify that** data representativeness assessment includes evaluation of relevant clinical variables such as comorbidity patterns, medication responses, and disease progression differences across demographic groups. | 2 | D/C |
+| **7.2.6** | **Verify that** advanced representativeness validation includes longitudinal analysis ensuring demographic representation is maintained across different time periods and evolving population characteristics. | 3 | D/V |
 
 ---
 
@@ -53,12 +42,12 @@ Implement systematic bias detection and assessment throughout the AI agent devel
 
 | # | Description | Level | Role |
 |:--------:|---------------------------------------------------------------------------------------------------------------------|:---:|:---:|
-| **7.8.1** | **Verify that** healthcare AI agents undergo comprehensive bias testing evaluating performance disparities across demographic groups, clinical conditions, and healthcare settings before clinical deployment. | 1 | D/V |
-| **7.8.2** | **Verify that** bias assessment includes multiple fairness metrics including demographic parity, equal opportunity, equalized odds, and clinical outcome equity to comprehensively evaluate agent fairness. | 1 | D/V |
-| **7.8.3** | **Verify that** bias detection includes evaluation of intersectional bias examining performance for patients with multiple demographic characteristics (e.g., elderly minority women, pediatric patients with rare diseases). | 2 | D/C |
-| **7.8.4** | **Verify that** algorithmic bias assessment includes clinical relevance evaluation ensuring that any performance differences are not clinically meaningful or do not affect care quality. | 2 | D/C |
-| **7.8.5** | **Verify that** bias detection includes evaluation of recommendation consistency ensuring AI agents provide equivalent recommendations for clinically similar patients regardless of demographic characteristics. | 2 | D/C |
-| **7.5.6** | **Verify that** advanced bias assessment includes causal analysis identifying the sources and mechanisms of bias within AI agent decision-making processes to enable targeted mitigation strategies. | 3 | D/V |
+| **7.3.1** | **Verify that** healthcare AI agents undergo comprehensive bias testing evaluating performance disparities across demographic groups, clinical conditions, and healthcare settings before clinical deployment. | 1 | D/V |
+| **7.3.2** | **Verify that** bias assessment includes multiple fairness metrics including demographic parity, equal opportunity, equalized odds, and clinical outcome equity to comprehensively evaluate agent fairness. | 1 | D/V |
+| **7.3.3** | **Verify that** bias detection includes evaluation of intersectional bias examining performance for patients with multiple demographic characteristics (e.g., elderly minority women, pediatric patients with rare diseases). | 2 | D/C |
+| **7.3.4** | **Verify that** algorithmic bias assessment includes clinical relevance evaluation ensuring that any performance differences are not clinically meaningful or do not affect care quality. | 2 | D/C |
+| **7.3.5** | **Verify that** bias detection includes evaluation of recommendation consistency ensuring AI agents provide equivalent recommendations for clinically similar patients regardless of demographic characteristics. | 2 | D/C |
+| **7.3.6** | **Verify that** advanced bias assessment includes causal analysis identifying the sources and mechanisms of bias within AI agent decision-making processes to enable targeted mitigation strategies. | 3 | D/V |
 
 ---
 
@@ -68,7 +57,7 @@ Implement active bias mitigation strategies and fairness enhancement mechanisms 
 
 | # | Description | Level | Role |
 |:--------:|---------------------------------------------------------------------------------------------------------------------|:---:|:---:|
-| **7.8.1** | **Verify that** healthcare AI agents implement bias mitigation techniques including data augmentation, algorithmic debiasing, and fairness-aware model training to reduce performance disparities across demographic groups. | 1 | D/V |
+| **7.4.1** | **Verify that** healthcare AI agents implement bias mitigation techniques including data augmentation, algorithmic debiasing, and fairness-aware model training to reduce performance disparities across demographic groups. | 1 | D/V |
 | **7.8.2** | **Verify that** bias mitigation strategies are clinically validated ensuring that fairness improvements do not compromise overall clinical effectiveness or patient safety. | 1 | D/C |
 | **7.8.3** | **Verify that** fairness enhancement includes post-processing techniques that adjust AI agent outputs to ensure equitable recommendations across different patient populations while maintaining clinical accuracy. | 2 | D/C |
 | **7.8.4** | **Verify that** bias mitigation includes ensemble methods combining multiple models or approaches to reduce the impact of individual model biases and improve overall fairness. | 2 | D/V |

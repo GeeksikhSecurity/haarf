@@ -48,13 +48,14 @@ Each category follows a consistent structure designed for healthcare compliance 
 **Clinical Focus**: Complete lifecycle documentation and clinical accountability
 
 ### Subcategories  
-- **C2.1** Data Lineage & Health Canada SGBA+ Compliance (6 requirements)
-- **C2.2** Model Development & Versioning Traceability (6 requirements)
-- **C2.3** Explainable AI (XAI) & Decision Transparency (6 requirements)
-- **C2.4** Clinical Decision Audit Trails (6 requirements)
-- **C2.5** Regulatory Compliance Documentation (5 requirements)
-- **C2.6** Machine-Interpretable Documentation (5 requirements)
-- **C2.7** Healthcare Supply Chain Transparency (4 requirements)
+- **C2.1** Explainability and Clinical Interpretability Standards (verification requirements)
+- **C2.2** Data Lineage & Health Canada SGBA+ Compliance (6 requirements)
+- **C2.3** Model Development & Versioning Traceability (6 requirements)
+- **C2.4** Explainable AI (XAI) & Decision Transparency (6 requirements)
+- **C2.5** Clinical Decision Audit Trails (6 requirements)
+- **C2.6** Regulatory Compliance Documentation (5 requirements)
+- **C2.7** Machine-Interpretable Documentation (5 requirements)
+- **C2.8** Healthcare Supply Chain Transparency (4 requirements)
 
 ### Key Healthcare Innovations
 - Healthcare-specific data lineage with bias assessment
@@ -69,13 +70,14 @@ Each category follows a consistent structure designed for healthcare compliance 
 **Clinical Focus**: Healthcare data protection and clinical system security
 
 ### Subcategories
-- **C3.1** Healthcare-Specific Adversarial Robustness (6 requirements)
-- **C3.2** Healthcare AI Supply Chain Security (6 requirements)
-- **C3.3** Real-Time Healthcare Threat Monitoring (6 requirements)
-- **C3.4** OWASP AISVS Healthcare Alignment (5 requirements)
-- **C3.5** Healthcare Data Protection & Privacy Security (6 requirements)
-- **C3.6** Clinical Incident Response & Recovery (6 requirements)
-- **C3.7** Healthcare Penetration Testing & Red Team Exercises (5 requirements)
+- **C3.1** Resilience to Socio-Technical Disruption (framework requirements)
+- **C3.2** Healthcare-Specific Adversarial Robustness (6 requirements)
+- **C3.3** Healthcare AI Supply Chain Security (6 requirements)
+- **C3.4** Real-Time Healthcare Threat Monitoring (6 requirements)
+- **C3.5** OWASP AISVS Healthcare Alignment (5 requirements)
+- **C3.6** Healthcare Data Protection & Privacy Security (6 requirements)
+- **C3.7** Clinical Incident Response & Recovery (6 requirements)
+- **C3.8** Healthcare Penetration Testing & Red Team Exercises (5 requirements)
 
 ### Key Healthcare Innovations
 - Healthcare-specific adversarial attack protection (medical imaging, clinical data)
