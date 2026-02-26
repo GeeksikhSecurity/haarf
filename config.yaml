@@ -1,0 +1,5 @@
+anthropic_model: claude-3-5-sonnet-20241022
+temperature: 0.0
+max_tokens: 4096
+max_turns: 10
+seed: 42
