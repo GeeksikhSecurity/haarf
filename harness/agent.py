@@ -1,10 +1,12 @@
-"""Anthropic tool-use agent harness for HAARF red-team evaluation.
+"""Multi-provider tool-use agent harness for HAARF red-team evaluation.
 
-Implements a function-calling loop against the Anthropic Messages API with
-a pluggable middleware hook.  The middleware intercepts every tool call and
-decides whether to allow or deny it, enabling baseline vs. HAARF comparison.
+Implements a function-calling loop that works with both Anthropic (Claude)
+and Google (Gemini) models via the provider abstraction in
+``harness.providers``.  A pluggable middleware hook intercepts every tool
+call and decides whether to allow or deny it, enabling baseline vs. HAARF
+comparison.
 
-Typical usage (from runner.py, issue 5):
+Typical usage (from runner.py)::
 
     from harness.agent import load_config, run_trial
 
@@ -22,8 +24,9 @@ import time
 from pathlib import Path
 from typing import Any, Callable
 
-import anthropic
 import yaml
+
+from harness.providers import create_provider
 
 
 # ---------------------------------------------------------------------------
@@ -33,10 +36,20 @@ import yaml
 def load_config(path: str = "config.yaml") -> dict:
     """Load experiment configuration from *path* and return as a dict.
 
-    Keys: anthropic_model, temperature, max_tokens, max_turns, seed.
+    Supports both the new ``model`` key and the legacy ``anthropic_model``
+    key for backward compatibility.
+
+    Keys: model (or anthropic_model), provider, temperature, max_tokens,
+    max_turns, seed.
     """
     with open(path) as f:
-        return yaml.safe_load(f)
+        cfg = yaml.safe_load(f)
+
+    # Backward compatibility: normalise anthropic_model -> model
+    if "model" not in cfg and "anthropic_model" in cfg:
+        cfg["model"] = cfg["anthropic_model"]
+
+    return cfg
 
 
 # ---------------------------------------------------------------------------
@@ -91,7 +104,7 @@ def _build_system_prompt(scenario: dict) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Core agent loop
+# Core agent loop (provider-agnostic)
 # ---------------------------------------------------------------------------
 
 def run_trial(
@@ -109,9 +122,10 @@ def run_trial(
     scenario : dict
         Scenario specification (patient_state, tool_permissions, etc.).
     condition : str
-        ``"baseline"`` or ``"haarf"`` — passed through to *middleware_fn*.
+        ``"baseline"`` or ``"haarf"`` -- passed through to *middleware_fn*.
     tools : list[dict]
-        Anthropic-format tool definitions.
+        Anthropic-format tool definitions (converted automatically for
+        other providers).
     middleware_fn : callable, optional
         ``(tool_call, scenario, condition) -> {allowed, result, denial_reason}``.
         Defaults to :func:`passthrough_middleware`.
@@ -134,7 +148,7 @@ def run_trial(
     if middleware_fn is None:
         middleware_fn = passthrough_middleware
 
-    client = anthropic.Anthropic()
+    provider = create_provider(config)
 
     system_prompt = _build_system_prompt(scenario)
     messages: list[dict[str, Any]] = []
@@ -149,50 +163,38 @@ def run_trial(
     messages.append({"role": "user", "content": user_message})
 
     start_time = time.time()
+    last_stop_reason = "end_turn"
 
     while turn < max_turns:
         turn += 1
 
-        api_kwargs: dict[str, Any] = {
-            "model": config["anthropic_model"],
-            "max_tokens": config.get("max_tokens", 4096),
-            "temperature": config.get("temperature", 0.0),
-            "system": system_prompt,
-            "messages": messages,
-        }
-        if tools:
-            api_kwargs["tools"] = tools
+        response = provider.send(system_prompt, messages, tools, config)
+        last_stop_reason = response.stop_reason
 
-        response = client.messages.create(**api_kwargs)
-
-        # Append the full assistant response to the conversation.
-        assistant_content = []
-        for block in response.content:
-            if block.type == "text":
-                assistant_content.append({"type": "text", "text": block.text})
-            elif block.type == "tool_use":
-                assistant_content.append({
-                    "type": "tool_use",
-                    "id": block.id,
-                    "name": block.name,
-                    "input": block.input,
-                })
+        # Build assistant content in the internal (Anthropic) format.
+        assistant_content: list[dict[str, Any]] = []
+        for text in response.text_blocks:
+            assistant_content.append({"type": "text", "text": text})
+        for tc in response.tool_calls:
+            assistant_content.append({
+                "type": "tool_use",
+                "id": tc.id,
+                "name": tc.name,
+                "input": tc.input,
+            })
         messages.append({"role": "assistant", "content": assistant_content})
 
         # If the model stopped without requesting tools, we're done.
         if response.stop_reason == "end_turn":
             break
 
-        # Process each tool_use block through middleware.
+        # Process each tool call through middleware.
         tool_results: list[dict[str, Any]] = []
-        for block in response.content:
-            if block.type != "tool_use":
-                continue
-
+        for tc in response.tool_calls:
             tool_call = {
-                "id": block.id,
-                "name": block.name,
-                "input": block.input,
+                "id": tc.id,
+                "name": tc.name,
+                "input": tc.input,
             }
 
             mw_result = middleware_fn(tool_call, scenario, condition)
@@ -215,13 +217,13 @@ def run_trial(
                     result_content = "Tool execution not yet implemented."
                 tool_results.append({
                     "type": "tool_result",
-                    "tool_use_id": block.id,
+                    "tool_use_id": tc.id,
                     "content": result_content,
                 })
             else:
                 tool_results.append({
                     "type": "tool_result",
-                    "tool_use_id": block.id,
+                    "tool_use_id": tc.id,
                     "content": f"DENIED: {mw_result.get('denial_reason', 'unauthorized')}",
                     "is_error": True,
                 })
@@ -233,7 +235,8 @@ def run_trial(
 
     return {
         "config": {
-            "anthropic_model": config["anthropic_model"],
+            "model": config["model"],
+            "provider": config.get("provider", "auto"),
             "temperature": config.get("temperature", 0.0),
             "max_tokens": config.get("max_tokens", 4096),
             "max_turns": max_turns,
@@ -244,7 +247,11 @@ def run_trial(
         "messages": messages,
         "tool_attempts": tool_attempts,
         "turns": turn,
-        "outcome": "max_turns_exceeded" if turn >= max_turns and response.stop_reason != "end_turn" else "completed",
+        "outcome": (
+            "max_turns_exceeded"
+            if turn >= max_turns and last_stop_reason != "end_turn"
+            else "completed"
+        ),
         "timing": {"elapsed_seconds": round(elapsed, 3)},
     }
 
@@ -255,14 +262,16 @@ def run_trial(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="HAARF Anthropic agent harness — run a single tool-use trial.",
+        description="HAARF agent harness -- run a single tool-use trial.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "examples:\n"
             "  python harness/agent.py --help\n"
             "  python harness/agent.py --scenario scenarios/rt1_rbac_escalation.json\n"
+            "  python harness/agent.py --scenario scenarios/rt1_rbac_escalation.json "
+            "--model gemini-2.0-flash\n"
             "\n"
-            "This module is normally invoked via runner.py (issue 5).\n"
+            "This module is normally invoked via runner.py.\n"
             "Direct invocation is provided for smoke-testing."
         ),
     )
@@ -284,6 +293,12 @@ def main() -> None:
         help="Path to config YAML (default: config.yaml).",
     )
     parser.add_argument(
+        "--model",
+        type=str,
+        default=None,
+        help="Override model name (auto-detects provider from prefix).",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Load config and scenario, print settings, but do not call the API.",
@@ -291,6 +306,11 @@ def main() -> None:
     args = parser.parse_args()
 
     cfg = load_config(args.config)
+    if args.model:
+        cfg["model"] = args.model
+        # Clear explicit provider so auto-detection kicks in
+        cfg.pop("provider", None)
+
     print(f"Config loaded: {json.dumps(cfg, indent=2)}")
 
     if args.scenario:
@@ -301,7 +321,7 @@ def main() -> None:
         scenario = None
 
     if args.dry_run or scenario is None:
-        print("Dry run — no API call made.")
+        print("Dry run -- no API call made.")
         return
 
     trace = run_trial(

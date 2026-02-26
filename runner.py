@@ -6,13 +6,18 @@ per-trial JSON traces, and evaluates pass/fail against each scenario's
 
 Usage::
 
-    # Smoke test
-    python runner.py --scenario scenarios/rt1_rbac_escalation.json \\
+    # Smoke test (Gemini Flash, default)
+    python runner.py --scenario scenarios/rt1_rbac_escalation.json \
                      --condition baseline --trials 1 --seed 42
 
-    # Full batch
-    python runner.py --scenario all --condition baseline haarf \\
+    # Full batch (Gemini Flash, N=50)
+    python runner.py --scenario all --condition baseline haarf \
                      --trials 50 --seed 0 --output results/
+
+    # Validation batch (Claude Sonnet, N=10)
+    python runner.py --scenario all --condition baseline haarf \
+                     --trials 10 --seed 0 --output results_validation/ \
+                     --model claude-3-5-sonnet-20241022
 """
 
 from __future__ import annotations
@@ -310,7 +315,7 @@ def run_single_trial(
     enriched_audit = enrich_audit_entries(
         raw_audit,
         trial_id=trial_id,
-        model_name=config["anthropic_model"],
+        model_name=config["model"],
     )
     trace["audit_log"] = enriched_audit
     trace["trial_id"] = trial_id
@@ -382,10 +387,16 @@ def main() -> None:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "examples:\n"
+            "  # Smoke test (Gemini Flash)\n"
             "  python runner.py --scenario scenarios/rt1_rbac_escalation.json "
-            "--condition baseline --trials 1 --seed 42\n"
+            "--condition baseline --trials 1 --seed 42\n\n"
+            "  # Full batch (Gemini Flash, N=50)\n"
             "  python runner.py --scenario all --condition baseline haarf "
-            "--trials 50 --seed 0 --output results/\n"
+            "--trials 50 --seed 0 --output results/\n\n"
+            "  # Validation batch (Claude Sonnet, N=10)\n"
+            "  python runner.py --scenario all --condition baseline haarf "
+            "--trials 10 --seed 0 --output results_validation/ "
+            "--model claude-3-5-sonnet-20241022\n"
         ),
     )
     parser.add_argument(
@@ -425,9 +436,22 @@ def main() -> None:
         default="config.yaml",
         help="Path to config YAML (default: config.yaml).",
     )
+    parser.add_argument(
+        "--model",
+        type=str,
+        default=None,
+        help=(
+            "Override model name (auto-detects provider). "
+            "E.g., gemini-2.0-flash or claude-3-5-sonnet-20241022."
+        ),
+    )
     args = parser.parse_args()
 
     config = load_config(args.config)
+    if args.model:
+        config["model"] = args.model
+        config.pop("provider", None)  # auto-detect from model name
+
     print(f"Config: {json.dumps(config, indent=2)}")
 
     if args.scenario == "all":
@@ -440,6 +464,7 @@ def main() -> None:
         f"condition(s) x {args.trials} trial(s) = "
         f"{len(scenarios) * len(args.condition) * args.trials} total trials"
     )
+    print(f"Model: {config['model']}")
 
     start = time.time()
     traces = run_batch(
@@ -455,6 +480,7 @@ def main() -> None:
     # Print summary
     passed = sum(1 for t in traces if t.get("passed"))
     print(f"\nCompleted {len(traces)} trials in {elapsed:.1f}s")
+    print(f"Model: {config['model']}")
     print(f"Passed: {passed}/{len(traces)} ({100 * passed / len(traces):.1f}%)")
 
     if args.output:

@@ -1,4 +1,11 @@
-anthropic_model: claude-3-5-sonnet-20241022
+# HAARF Evaluation Harness - Experiment Configuration
+#
+# Primary model: Gemini 2.0 Flash (cost-effective, demonstrates model-agnostic design)
+# Validation model: Claude 3.5 Sonnet (cross-model robustness check)
+#
+# Override at runtime:  python runner.py --model claude-3-5-sonnet-20241022 ...
+
+model: gemini-2.0-flash
 temperature: 0.0
 max_tokens: 4096
 max_turns: 10
