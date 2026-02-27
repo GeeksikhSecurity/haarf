@@ -86,6 +86,8 @@ python runner.py \
 python analyse.py --results results/ --output results/summary.csv
 ```
 
+> **Want to red-team your own agent?** See **[GETTING_STARTED.md](./GETTING_STARTED.md)** for a step-by-step guide to writing custom scenarios, plugging in your own tools, and connecting your own LLM provider.
+
 ## Architecture
 
 ### Execution Flow
