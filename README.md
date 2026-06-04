@@ -211,6 +211,22 @@ All patient data in this repository is **synthetic**. No real Protected Health I
 
 We welcome contributions from healthcare professionals, AI developers, regulatory experts, and researchers. See [Issues](https://github.com/Task-force-for-AI-agents-in-Healthcare/haarf/issues) for open work.
 
+## Citation
+
+If you use HAARF in your research, please cite our paper:
+
+> Schwoebel, Jim, et al. "HAARF: Healthcare AI Agents Regulatory Framework-A Comprehensive Security Verification Standard for Autonomous AI Systems in Clinical Environments." *medRxiv* (2026): 2026-04.
+
+```bibtex
+@article{schwoebel2026haarf,
+  title={HAARF: Healthcare AI Agents Regulatory Framework-A Comprehensive Security Verification Standard for Autonomous AI Systems in Clinical Environments},
+  author={Schwoebel, Jim and others},
+  journal={medRxiv},
+  pages={2026--04},
+  year={2026}
+}
+```
+
 ## License
 
 [Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/)
