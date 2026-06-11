@@ -218,12 +218,14 @@ If you use HAARF in your research, please cite our paper:
 > Schwoebel, Jim, et al. "HAARF: Healthcare AI Agents Regulatory Framework-A Comprehensive Security Verification Standard for Autonomous AI Systems in Clinical Environments." *medRxiv* (2026): 2026-04.
 
 ```bibtex
-@article{schwoebel2026haarf,
-  title={HAARF: Healthcare AI Agents Regulatory Framework-A Comprehensive Security Verification Standard for Autonomous AI Systems in Clinical Environments},
-  author={Schwoebel, Jim and others},
-  journal={medRxiv},
-  pages={2026--04},
-  year={2026}
+@unpublished{schwoebel2026haarf,
+  author    = {Schwoebel, Jim and Frasch, Martin and Spalding, Art and Sewell, Ed and Englert, Phil and Halpert, Ben and Overbay, Collin and Semenec, Ingrida and Shor, Joel},
+  title     = {HAARF: Healthcare AI agents regulatory framework --- a comprehensive security verification standard for autonomous AI systems in clinical environments},
+  note      = {medRxiv Preprint},
+  year      = {2026},
+  month     = {April},
+  doi       = {10.64898/2026.04.09.26350519v1},
+  url       = {https://www.medrxiv.org/content/10.64898/2026.04.09.26350519v1}
 }
 ```
 
